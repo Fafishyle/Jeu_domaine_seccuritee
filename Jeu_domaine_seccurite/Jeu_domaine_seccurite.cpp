@@ -1,6 +1,9 @@
 // Jeu_domaine_seccurite.cpp : Ce fichier contient la fonction 'main'. L'exécution du programme commence et se termine à cet endroit.
 //
 
+//Concevoir un jeu dans le domaine de sécurité
+
+
 #include <iostream>
 using namespace std;
 
@@ -22,7 +25,9 @@ int main()
     {
         cout << "C:/Users/"<<name_user<<":~$ ";
         cin >> enter_user;
-        cout << "\n";
+        cout << "Votre réponse : "<<enter_user<<"\n";
     }
+    cout << "Jeu fini ! \n";
+    return 0;
     
 }
