@@ -18,19 +18,30 @@ void listerFichiers(const vector<string>& files) {
     }
 }
 
+// Pour colorier le texte du terminal
+// Définition des codes ANSI pour les couleurs du texte
+#define RESET   "\033[0m"
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN    "\033[36m"
+#define WHITE   "\033[37m"
+
 // Programme principal
 int main()
 {
     string name_user = "";      // Nom de l'utilisateur
-    cout << "Bienvenue dans le jeu de la securite!\n Insere ton nom: \n";
+    cout << BLUE << "Bienvenue dans le jeu de la securite!\n Insere ton nom: "<< RESET<<"\n";
     cin >> name_user;
-    cout << "Bonjour "<< name_user << "! \n";
+    cout << BLUE << "Bonjour "<< name_user << "! \n";
     cout << "On a trouve ce disque dur. \n"<<
-        "On sait qu'il contient une cle de porte monnaie de crypto.\n"<<
-        "Il faut explorer le filesystem et trouver des indices pour trouver la clef! \n"<<
+        "On sait qu'il contient " << RED << "une clef de porte monnaie de crypto!\n"<< RESET <<
+        BLUE << "Il faut explorer le filesystem et trouver des indices pour trouver la clef.\n "<<
         "Tu vas entrer dans un simulateur de terminal d'une machine.\n" <<
-        "Tu vas decouvrir comment marche la securite.\n";
-    cout << "______________________Entree________________________\n";
+        "Tu vas decouvrir comment marche la securite."<< RESET <<"\n";
+    cout << GREEN << "______________________Entree________________________\n";
 
     
     vector<string> files = { "fichier1.txt", "fichier2.txt", "dossier1", "dossier2" };  // Fichiers contenus dans le disque
@@ -38,25 +49,25 @@ int main()
     string enter_user = "";  // Commandes entrées par l'utilisateur
     while (enter_user != "Exit" && enter_user != "exit")
     {
-        cout << "C:/Users/"<<name_user<<":~$ ";
+        cout << GREEN<< "C:/Users/"<<name_user<<":~$ "<< RESET;
         cin >> enter_user;
         // Exécution de la commande saisie
         if (enter_user == "ls") {
             listerFichiers(files); // Affiche les fichiers et les répertoires
         }
         else if (enter_user.substr(0, 2) == "cd") {
-            cout << "Commande 'cd' non supportée dans cette version.\n";
+            cout << GREEN << "Commande 'cd' pas encore implémenté."<< RESET <<"\n";
         }
         else if (enter_user.substr(0, 5) == "mkdir") {
-            cout << "Commande 'mkdir' non supportée dans cette version.\n";
+            cout << GREEN << "Commande 'mkdir' pas encore implémenté." << RESET << "\n";
         }
         else
         {
-            cout << "Nous ne connaissons pas cette commande.\n";
+            cout << GREEN << "Nous ne connaissons pas cette commande." << RESET << "\n";
         }
     }
-    cout << "______________________Sortie________________________\n";
-    cout << "Jeu fini ! \n";
+    cout << GREEN << "______________________Sortie________________________\n";
+    cout << "Jeu fini ! "<< RESET << "\n";
     return 0;
     
 }
