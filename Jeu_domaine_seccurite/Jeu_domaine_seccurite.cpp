@@ -14,7 +14,15 @@ using namespace std;
 // Fonction pour lister les fichiers et les répertoires dans le répertoire actuel
 void listerFichiers(const vector<string>& files) {
     for (const auto& file : files) {
+        /*
+        if (files est de type dossier)
+        {
+            alors afficher arborescence 
+                listerFichiers(files)
+        }
+        */
         cout << file << '\n';
+
     }
 }
 
