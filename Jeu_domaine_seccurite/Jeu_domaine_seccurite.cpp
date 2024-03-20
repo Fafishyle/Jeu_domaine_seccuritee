@@ -83,13 +83,20 @@ vector<string> splitInput(const string& input) {
 int main()
 {
     Folder* Drive = create_drive();
-    Folder* current_state = Drive; //Etat courant, pour le parcourt des dossiers
+    Folder* current_state = Drive; //Etat courant, pour le parcourt des dossiers, besoin pour la commande cd?
 
     string name_user = "";      // Nom de l'utilisateur
+<<<<<<< HEAD
     std::cout << BLUE << "Bienvenue dans le jeu de la securite!\n Insere ton nom: "<< RESET<<"\n";
     cin >> name_user;
     std::cout << BLUE << "Bonjour "<< name_user << "! \n";
     std::cout << "On a trouve ce disque dur. \n"<<
+=======
+    cout << BLUE << "Bienvenue dans le jeu de la securite!\n Insere ton nom: "<< RESET<<"\n";
+    std::getline(std::cin, name_user);
+    cout << BLUE << "Bonjour "<< name_user << "! \n";
+    cout << "On a trouve ce disque dur. \n"<<
+>>>>>>> a6dacfe73aa3e5777dcccca2a6e02020451b7028
         "On sait qu'il contient " << RED << "une clef de porte monnaie de crypto!\n"<< RESET <<
         BLUE << "Il faut explorer le filesystem et trouver des indices pour trouver la clef.\n "<<
         "Tu vas entrer dans un simulateur de terminal d'une machine.\n" <<
@@ -108,6 +115,7 @@ int main()
 
     while (user_input != "Exit")
     {
+<<<<<<< HEAD
         std::cout << GREEN<< "C:/Users/"<<name_user<<":~$ "<< RESET;
         cin >> user_input;
 
@@ -115,6 +123,13 @@ int main()
         //1. la mettre en minuscule
         for (int c = 0; c < user_input.size(); c++) {
             user_input[c] = tolower(user_input[c]);
+=======
+        cout << GREEN<< "C:/Users/"<<name_user<<":~$ "<< RESET;
+        std::getline(std::cin, enter_user); //input de l'utilisateur
+        // Exécution de la commande saisie
+        if (enter_user == "ls") { //commande ls tout court
+            Ls_Command(current_state); // Affiche les fichiers et les répertoires
+>>>>>>> a6dacfe73aa3e5777dcccca2a6e02020451b7028
         }
 
         //2. split les arguments
