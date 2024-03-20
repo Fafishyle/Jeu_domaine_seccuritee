@@ -6,7 +6,7 @@ Folder::Folder(std::string a_name, std::string a_password, int a_file_count) :
     my_password(a_password), 
     my_file_count(a_file_count) {
     for (int i = 0; i < my_file_count; i++) {
-        File* a_file = new File("Fichier" + std::to_string(i + 1)); // Un pointeur pour ajouter l'objet à la vector
+        File* a_file = new File("Fichier" + std::to_string(i + 1), "txt"); // Un pointeur pour ajouter l'objet à la vector
         my_files.push_back(a_file);
     }
     std::cout << "Folder::Un Dossier a ete cree!" << std::endl;

@@ -11,25 +11,8 @@
 #include <sstream>
 #include "File.h"
 #include "Folder.h"
-#include "ContentFile.h"
 
 using namespace std;
-
-//Fonction ls
-// Fonction pour lister les fichiers et les répertoires dans le répertoire actuel
-void listerFichiers(const Folder a_folder) {
-    for (const auto& file : a_folder.my_files){
-        /*
-        if (files est de type dossier)
-        {
-            alors afficher arborescence 
-                listerFichiers(files)
-        }
-        */
-        std::cout << file->my_name << '\n';
-
-    }
-}
 
 // Pour colorier le texte du terminal
 // Définition des codes ANSI pour les couleurs du texte
@@ -46,7 +29,7 @@ void listerFichiers(const Folder a_folder) {
 // Fonction pour lister les fichiers et les répertoires dans le répertoire actuel
 void Ls_Command(const Folder* a_folder) {
     for (const auto& file : a_folder->my_files){ //Afficher fichier
-        cout << file->my_name << '\n';
+        cout << file->getFullName() << '\n';
     }
     for (const auto& folder : a_folder->my_subfolders) { //Afficher fichier
         cout << folder->my_name << '\n';
@@ -61,43 +44,38 @@ Folder* create_drive()
     //créer 10 dossiers ?
     Folder* myFolder = new Folder("Drive", "password123", 2);
     Folder* subFolder1 = new Folder("Dossier1","sub_password1", 2);   //Créé un sous-dossier
+    File* file = new File("puzzle3", "png");
     myFolder->Add_Subfolder(subFolder1);
+    myFolder->Add_File(file);
 
     std::cout << "create_drive::Disque dur créé" << "! \n";
     return myFolder;
 }
 
-vector<string> splitInput(const string& input) {
-    istringstream iss(input);
-    vector<string> arguments;
-    string argument;
-    while (iss >> argument) {
-        if (!argument.empty()) {
-            arguments.push_back(argument);
-        }
+void splitInput(const string& input, vector<string>* output) {
+    stringstream ss(input);
+    string s;
+    while (std::getline(ss, s, ' ')) {
+        output->push_back(s);
     }
-    return arguments;
 }
 
 // Programme principal
-int main()
-{
+int main(){
+
     Folder* Drive = create_drive();
-    Folder* current_state = Drive; //Etat courant, pour le parcourt des dossiers, besoin pour la commande cd?
+    Folder* cwd = Drive; //Current Working Directory : Etat courant, pour le parcourt des dossiers, besoin pour la commande cd?
 
     string name_user = "";      // Nom de l'utilisateur
-<<<<<<< HEAD
+
     std::cout << BLUE << "Bienvenue dans le jeu de la securite!\n Insere ton nom: "<< RESET<<"\n";
     cin >> name_user;
     std::cout << BLUE << "Bonjour "<< name_user << "! \n";
-    std::cout << "On a trouve ce disque dur. \n"<<
-=======
-    cout << BLUE << "Bienvenue dans le jeu de la securite!\n Insere ton nom: "<< RESET<<"\n";
-    std::getline(std::cin, name_user);
-    cout << BLUE << "Bonjour "<< name_user << "! \n";
-    cout << "On a trouve ce disque dur. \n"<<
->>>>>>> a6dacfe73aa3e5777dcccca2a6e02020451b7028
-        "On sait qu'il contient " << RED << "une clef de porte monnaie de crypto!\n"<< RESET <<
+    std::cout << "On a trouve ce disque dur. \n";
+
+    
+
+    cout << "On sait qu'il contient " << RED << "une clef de porte monnaie de crypto!\n"<< RESET <<
         BLUE << "Il faut explorer le filesystem et trouver des indices pour trouver la clef.\n "<<
         "Tu vas entrer dans un simulateur de terminal d'une machine.\n" <<
         "Tu vas decouvrir comment marche la securite."<< RESET <<"\n";
@@ -105,42 +83,36 @@ int main()
 
     
      //vector<string> files = { "fichier1.txt", "fichier2.txt", "dossier1", "dossier2" };  // Fichiers contenus dans le disque
-    
-    Folder Drive = create_drive();
     string user_input = "";  // Commandes entrées par l'utilisateur
     
     vector<string> command;
 
+    bool exit_flag = false;
 
 
-    while (user_input != "Exit")
+
+    while (!exit_flag)
     {
-<<<<<<< HEAD
+        await_input:
         std::cout << GREEN<< "C:/Users/"<<name_user<<":~$ "<< RESET;
-        cin >> user_input;
+        std::getline(std::cin >> std::ws, user_input);
 
         //---parser la commande saisie
         //1. la mettre en minuscule
         for (int c = 0; c < user_input.size(); c++) {
             user_input[c] = tolower(user_input[c]);
-=======
-        cout << GREEN<< "C:/Users/"<<name_user<<":~$ "<< RESET;
-        std::getline(std::cin, enter_user); //input de l'utilisateur
-        // Exécution de la commande saisie
-        if (enter_user == "ls") { //commande ls tout court
-            Ls_Command(current_state); // Affiche les fichiers et les répertoires
->>>>>>> a6dacfe73aa3e5777dcccca2a6e02020451b7028
         }
 
         //2. split les arguments
-        command = splitInput(user_input);
+        splitInput(user_input, &command);
 
         //---Exécution de la commande saisie
         if (command[0] == "ls") {
-            listerFichiers(Drive); // Affiche les fichiers et les répertoires
+            Ls_Command(Drive); // Affiche les fichiers et les répertoires
         }
         else if (command[0] == "cd") {
             //vérifier si command[1] est dans la liste des folders dispo, si oui y bouger
+
             std::cout << GREEN << "Commande 'cd' pas encore implémenté."<< RESET <<"\n";
         }
         else if (command[0] == "mkdir") {
@@ -151,6 +123,34 @@ int main()
             //check que command[1] est un nom d'archive verrouillée
             std::cout << GREEN << "Commande 'unpack' pas encore implémenté." << RESET << "\n";
         }
+        else if (command[0] == "exit") {
+            exit_flag = true;
+        }
+        else if (command[0] == "open") {
+            if (command.size() == 1) {
+                std::cout << RED << "Argument manquant : nom du fichier" << RESET << "\n";
+            }
+            else {
+                try {
+                    string filename = command[1];
+                    for (File* f : cwd->my_files) {
+                        if ((f->my_name + "." + f->my_extension) == filename) {
+                            //ouvrir le fichier
+                            f->Open();
+
+
+                            goto await_input;
+                        }
+                    }
+                    std::cout << RED << "Erreur : fichier introuvable" << RESET << "\n";
+
+                }
+                catch (exception e) {
+                    std::cout << RED << "Argument manquant : nom du fichier" << RESET << "\n";
+                }
+            }
+            
+        }
         else
         {
             std::cout << GREEN << "Nous ne connaissons pas cette commande." << RESET << "\n";
@@ -158,6 +158,5 @@ int main()
     }
     std::cout << GREEN << "______________________Sortie________________________\n";
     std::cout << "Jeu fini ! "<< RESET << "\n";
-    return 0;
-    
+    return 0; 
 }
