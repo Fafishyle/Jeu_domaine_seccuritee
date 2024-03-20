@@ -4,9 +4,11 @@
 
 class File
 {
-private:
-    std::string name;
 public:
+        std::string name;
+public:
+    File();
     File(std::string un_name);
+    void Renamed(std::string un_name);
 };
 

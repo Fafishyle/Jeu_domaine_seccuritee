@@ -16,8 +16,8 @@ using namespace std;
 
 //Fonction ls
 // Fonction pour lister les fichiers et les répertoires dans le répertoire actuel
-void listerFichiers(const vector<string>& files) {
-    for (const auto& file : files) {
+void listerFichiers(const Folder a_folder) {
+    for (const auto& file : a_folder.content){
         /*
         if (files est de type dossier)
         {
@@ -25,7 +25,7 @@ void listerFichiers(const vector<string>& files) {
                 listerFichiers(files)
         }
         */
-        cout << file << '\n';
+        cout << file->name << '\n';
 
     }
 }
@@ -42,11 +42,14 @@ void listerFichiers(const vector<string>& files) {
 #define WHITE   "\033[37m"
 
 //Création du disque dur
+//retourne un dossier?
 Folder create_drive()
 {
     //créer 10 dossiers
+    Folder myFolder("password123", 5);
 
     cout << "create_drive::Disque dur créé" << "! \n";
+    return myFolder;
 
 }
 
@@ -65,9 +68,9 @@ int main()
     cout << GREEN << "______________________Entree________________________\n";
 
     
-     vector<string> files = { "fichier1.txt", "fichier2.txt", "dossier1", "dossier2" };  // Fichiers contenus dans le disque
+     //vector<string> files = { "fichier1.txt", "fichier2.txt", "dossier1", "dossier2" };  // Fichiers contenus dans le disque
     
-    create_drive();
+    Folder Drive = create_drive();
     string enter_user = "";  // Commandes entrées par l'utilisateur
     while (enter_user != "Exit" && enter_user != "exit")
     {
@@ -75,7 +78,7 @@ int main()
         cin >> enter_user;
         // Exécution de la commande saisie
         if (enter_user == "ls") {
-            listerFichiers(files); // Affiche les fichiers et les répertoires
+            listerFichiers(Drive); // Affiche les fichiers et les répertoires
         }
         else if (enter_user.substr(0, 2) == "cd") {
             cout << GREEN << "Commande 'cd' pas encore implémenté."<< RESET <<"\n";
