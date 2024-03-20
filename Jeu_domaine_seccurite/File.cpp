@@ -10,7 +10,7 @@ File::File()
 File::File(std::string a_name) :
     my_name(a_name)
 {
-    std::cout << "File::Un File a ete cree!" << std::endl;
+    std::cout << "File::Un fichier a ete cree!" << std::endl;
 };
 
 void File::Renamed(std::string a_name)

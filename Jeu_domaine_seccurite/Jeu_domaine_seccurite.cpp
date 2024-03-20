@@ -42,16 +42,29 @@ void listerFichiers(const Folder a_folder) {
 #define CYAN    "\033[36m"
 #define WHITE   "\033[37m"
 
+//Fonction ls
+// Fonction pour lister les fichiers et les répertoires dans le répertoire actuel
+void Ls_Command(const Folder* a_folder) {
+    for (const auto& file : a_folder->my_files){ //Afficher fichier
+        cout << file->my_name << '\n';
+    }
+    for (const auto& folder : a_folder->my_subfolders) { //Afficher fichier
+        cout << folder->my_name << '\n';
+    }
+}
+
+
 //Création du disque dur
-//retourne un dossier?
-Folder create_drive()
+Folder* create_drive()
 {
-    //créer 10 dossiers
-    Folder myFolder("password123", 5);
+    cout << "create_drive::Creation du disque dur..." << "! \n";
+    //créer 10 dossiers ?
+    Folder* myFolder = new Folder("Drive", "password123", 2);
+    Folder* subFolder1 = new Folder("Dossier1","sub_password1", 2);   //Créé un sous-dossier
+    myFolder->Add_Subfolder(subFolder1);
 
     std::cout << "create_drive::Disque dur créé" << "! \n";
     return myFolder;
-
 }
 
 vector<string> splitInput(const string& input) {
@@ -69,6 +82,9 @@ vector<string> splitInput(const string& input) {
 // Programme principal
 int main()
 {
+    Folder* Drive = create_drive();
+    Folder* current_state = Drive; //Etat courant, pour le parcourt des dossiers
+
     string name_user = "";      // Nom de l'utilisateur
     std::cout << BLUE << "Bienvenue dans le jeu de la securite!\n Insere ton nom: "<< RESET<<"\n";
     cin >> name_user;
