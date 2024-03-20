@@ -4,7 +4,9 @@
 
 class File
 {
-    private:
-        std::string nom;
+private:
+    std::string name;
+public:
+    File(std::string un_name);
 };
 

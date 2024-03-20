@@ -8,6 +8,10 @@
 
 #include <iostream>
 #include <vector>
+#include "File.h"
+#include "Folder.h"
+#include "ContentFile.h"
+
 using namespace std;
 
 //Fonction ls
@@ -37,6 +41,15 @@ void listerFichiers(const vector<string>& files) {
 #define CYAN    "\033[36m"
 #define WHITE   "\033[37m"
 
+//Création du disque dur
+Folder create_drive()
+{
+    //créer 10 dossiers
+
+    cout << "create_drive::Disque dur créé" << "! \n";
+
+}
+
 // Programme principal
 int main()
 {
@@ -52,8 +65,9 @@ int main()
     cout << GREEN << "______________________Entree________________________\n";
 
     
-    vector<string> files = { "fichier1.txt", "fichier2.txt", "dossier1", "dossier2" };  // Fichiers contenus dans le disque
+     vector<string> files = { "fichier1.txt", "fichier2.txt", "dossier1", "dossier2" };  // Fichiers contenus dans le disque
     
+    create_drive();
     string enter_user = "";  // Commandes entrées par l'utilisateur
     while (enter_user != "Exit" && enter_user != "exit")
     {

@@ -9,6 +9,7 @@ private:
         std::vector <File> content;
         std::string password;
 public:
-     void Open();
+    Folder(std::string un_password);
+    void Open();
 };
 

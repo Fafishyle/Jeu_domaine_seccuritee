@@ -10,7 +10,7 @@ private:
     int taille;
     std::string content;
 public:
-    ContentFile(std::string nom, std::string extension, int taille, std::string content);
+    ContentFile(std::string un_name, std::string un_extension, int un_taille, std::string un_content);
     void Open();
 };
 

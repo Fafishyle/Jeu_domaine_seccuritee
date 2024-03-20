@@ -32,7 +32,7 @@
 	Le 5e mdp est le 1er mot de passe utilisé par l'outil linux qui bruteforce, que le prof nous
 	avait montré. (à tester que le 1er est bien tjrs le meme)
 
-- 6. Caché dans l'hexa
+- 6. Caché dans l'hexa X
 
 	Comme le prof avait fait, on planque un "pass = truc" dans un fichier lambda (image ou autre,
 	juste pas texte) 
