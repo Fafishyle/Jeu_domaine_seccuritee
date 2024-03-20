@@ -6,11 +6,11 @@
 class ContentFile : public File
 {
 private:
-    std::string extension;
-    int taille;
-    std::string content;
+    std::string my_extension;
+    int my_size;
+    std::string my_content;
 public:
-    ContentFile(std::string un_name, std::string un_extension, int un_taille, std::string un_content);
+    ContentFile(std::string a_name, std::string a_extension, int a_size, std::string a_content);
     void Open();
 };
 

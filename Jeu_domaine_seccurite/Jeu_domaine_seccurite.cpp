@@ -17,7 +17,7 @@ using namespace std;
 //Fonction ls
 // Fonction pour lister les fichiers et les répertoires dans le répertoire actuel
 void listerFichiers(const Folder a_folder) {
-    for (const auto& file : a_folder.content){
+    for (const auto& file : a_folder.my_content){
         /*
         if (files est de type dossier)
         {
@@ -25,7 +25,7 @@ void listerFichiers(const Folder a_folder) {
                 listerFichiers(files)
         }
         */
-        cout << file->name << '\n';
+        cout << file->my_name << '\n';
 
     }
 }

@@ -5,10 +5,10 @@
 class File
 {
 public:
-        std::string name;
+        std::string my_name;
 public:
     File();
-    File(std::string un_name);
-    void Renamed(std::string un_name);
+    File(std::string a_name);
+    void Renamed(std::string a_name);
 };
 

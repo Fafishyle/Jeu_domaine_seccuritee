@@ -4,16 +4,16 @@
 
 File::File()
 {
-    name = "Untitled";
+    my_name = "Untitled";
 };
 
-File::File(std::string un_name) :
-    name(un_name)
+File::File(std::string a_name) :
+    my_name(a_name)
 {
     std::cout << "File::Un File a ete cree!" << std::endl;
 };
 
-void File::Renamed(std::string un_name)
+void File::Renamed(std::string a_name)
 {
-    name = un_name;
+    my_name = a_name;
 };
