@@ -5,23 +5,23 @@
 
 - idées de puzzles : 
 
-- 1. Rien du tout
+- 1. Rien du tout X
 
 	Il faut commencer avec des choses simples.
 	Au début, il n'y a qu'un fichier texte et une archive zip verouillée par mot de passe.
 	Le txt indique directement le mdp de l'archive. Ca laisse apprendre les commandes
 	de base tranquillement.
 
-- 2. Code césar rot13
+- 2. Code césar rot13	 X
 	
 	Le prochain txt contient un texte à rot13 pour trouver le prochain mdp..
 	Préciser qu'on peut copier/coller dans/depuis le terminal avec clic droit!
 
-- 3. Un truc en image
+- 3. Un truc en image	X
 
 	En augmentant le contraste de l'image, des pixels qui indiquent le 3e mdp se révéleront
 
-- 4.Du texte en ASCII Art
+- 4.Du texte en ASCII Art	 X
 
 	Le fichier texte contient de l'ascii art écrivant le mot de passe. Mais des sauts de ligne
 	sont insérés au beau milieu qui le rendent illisible. En les supprimant, on retrouve le mot
