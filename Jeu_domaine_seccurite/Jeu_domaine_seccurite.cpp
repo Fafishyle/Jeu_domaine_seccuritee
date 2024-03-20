@@ -54,11 +54,11 @@ Folder* create_drive()
 int main()
 {
     Folder* Drive = create_drive();
-    Folder* current_state = Drive; //Etat courant, pour le parcourt des dossiers
+    Folder* current_state = Drive; //Etat courant, pour le parcourt des dossiers, besoin pour la commande cd?
 
     string name_user = "";      // Nom de l'utilisateur
     cout << BLUE << "Bienvenue dans le jeu de la securite!\n Insere ton nom: "<< RESET<<"\n";
-    cin >> name_user;
+    std::getline(std::cin, name_user);
     cout << BLUE << "Bonjour "<< name_user << "! \n";
     cout << "On a trouve ce disque dur. \n"<<
         "On sait qu'il contient " << RED << "une clef de porte monnaie de crypto!\n"<< RESET <<
@@ -70,7 +70,7 @@ int main()
     while (enter_user != "Exit" && enter_user != "exit")
     {
         cout << GREEN<< "C:/Users/"<<name_user<<":~$ "<< RESET;
-        cin >> enter_user;
+        std::getline(std::cin, enter_user); //input de l'utilisateur
         // Exécution de la commande saisie
         if (enter_user == "ls") { //commande ls tout court
             Ls_Command(current_state); // Affiche les fichiers et les répertoires
