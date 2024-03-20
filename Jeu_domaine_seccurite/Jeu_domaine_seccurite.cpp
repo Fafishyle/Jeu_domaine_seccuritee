@@ -14,22 +14,6 @@
 
 using namespace std;
 
-//Fonction ls
-// Fonction pour lister les fichiers et les répertoires dans le répertoire actuel
-void listerFichiers(const Folder a_folder) {
-    for (const auto& file : a_folder.my_files){
-        /*
-        if (files est de type dossier)
-        {
-            alors afficher arborescence 
-                listerFichiers(files)
-        }
-        */
-        cout << file->my_name << '\n';
-
-    }
-}
-
 // Pour colorier le texte du terminal
 // Définition des codes ANSI pour les couleurs du texte
 #define RESET   "\033[0m"
@@ -41,21 +25,37 @@ void listerFichiers(const Folder a_folder) {
 #define CYAN    "\033[36m"
 #define WHITE   "\033[37m"
 
+//Fonction ls
+// Fonction pour lister les fichiers et les répertoires dans le répertoire actuel
+void Ls_Command(const Folder* a_folder) {
+    for (const auto& file : a_folder->my_files){ //Afficher fichier
+        cout << file->my_name << '\n';
+    }
+    for (const auto& folder : a_folder->my_subfolders) { //Afficher fichier
+        cout << folder->my_name << '\n';
+    }
+}
+
+
 //Création du disque dur
-//retourne un dossier?
-Folder create_drive()
+Folder* create_drive()
 {
-    //créer 10 dossiers
-    Folder myFolder("password123", 5);
+    cout << "create_drive::Creation du disque dur..." << "! \n";
+    //créer 10 dossiers ?
+    Folder* myFolder = new Folder("Drive", "password123", 2);
+    Folder* subFolder1 = new Folder("Dossier1","sub_password1", 2);   //Créé un sous-dossier
+    myFolder->Add_Subfolder(subFolder1);
 
-    cout << "create_drive::Disque dur créé" << "! \n";
+    cout << "create_drive::Disque dur cree" << "! \n";
     return myFolder;
-
 }
 
 // Programme principal
 int main()
 {
+    Folder* Drive = create_drive();
+    Folder* current_state = Drive; //Etat courant, pour le parcourt des dossiers
+
     string name_user = "";      // Nom de l'utilisateur
     cout << BLUE << "Bienvenue dans le jeu de la securite!\n Insere ton nom: "<< RESET<<"\n";
     cin >> name_user;
@@ -66,19 +66,27 @@ int main()
         "Tu vas entrer dans un simulateur de terminal d'une machine.\n" <<
         "Tu vas decouvrir comment marche la securite."<< RESET <<"\n";
     cout << GREEN << "______________________Entree________________________\n";
-
-    
-     //vector<string> files = { "fichier1.txt", "fichier2.txt", "dossier1", "dossier2" };  // Fichiers contenus dans le disque
-    
-    Folder Drive = create_drive();
     string enter_user = "";  // Commandes entrées par l'utilisateur
     while (enter_user != "Exit" && enter_user != "exit")
     {
         cout << GREEN<< "C:/Users/"<<name_user<<":~$ "<< RESET;
         cin >> enter_user;
         // Exécution de la commande saisie
-        if (enter_user == "ls") {
-            listerFichiers(Drive); // Affiche les fichiers et les répertoires
+        if (enter_user == "ls") { //commande ls tout court
+            Ls_Command(current_state); // Affiche les fichiers et les répertoires
+        }
+        else if (enter_user.substr(0, 2) == "ls" && enter_user.substr(3).find_first_not_of(' ') == std::string::npos)
+        //commande ls avec argument
+        {
+            std::cout << "ls avec argument" <<std::endl;
+            std::string argument = enter_user.substr(3);
+            for (const auto& subfolder : current_state->my_subfolders)
+            {
+                if (subfolder->my_name == argument)
+                {
+                    Ls_Command(subfolder);
+                }
+            } 
         }
         else if (enter_user.substr(0, 2) == "cd") {
             cout << GREEN << "Commande 'cd' pas encore implémenté."<< RESET <<"\n";
