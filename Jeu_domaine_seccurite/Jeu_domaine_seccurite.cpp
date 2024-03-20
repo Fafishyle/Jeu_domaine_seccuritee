@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <vector>
+#include <sstream>
 #include "File.h"
 #include "Folder.h"
 #include "ContentFile.h"
@@ -25,7 +26,7 @@ void listerFichiers(const Folder a_folder) {
                 listerFichiers(files)
         }
         */
-        cout << file->my_name << '\n';
+        std::cout << file->my_name << '\n';
 
     }
 }
@@ -48,51 +49,84 @@ Folder create_drive()
     //créer 10 dossiers
     Folder myFolder("password123", 5);
 
-    cout << "create_drive::Disque dur créé" << "! \n";
+    std::cout << "create_drive::Disque dur créé" << "! \n";
     return myFolder;
 
+}
+
+vector<string> splitInput(const string& input) {
+    istringstream iss(input);
+    vector<string> arguments;
+    string argument;
+    while (iss >> argument) {
+        if (!argument.empty()) {
+            arguments.push_back(argument);
+        }
+    }
+    return arguments;
 }
 
 // Programme principal
 int main()
 {
     string name_user = "";      // Nom de l'utilisateur
-    cout << BLUE << "Bienvenue dans le jeu de la securite!\n Insere ton nom: "<< RESET<<"\n";
+    std::cout << BLUE << "Bienvenue dans le jeu de la securite!\n Insere ton nom: "<< RESET<<"\n";
     cin >> name_user;
-    cout << BLUE << "Bonjour "<< name_user << "! \n";
-    cout << "On a trouve ce disque dur. \n"<<
+    std::cout << BLUE << "Bonjour "<< name_user << "! \n";
+    std::cout << "On a trouve ce disque dur. \n"<<
         "On sait qu'il contient " << RED << "une clef de porte monnaie de crypto!\n"<< RESET <<
         BLUE << "Il faut explorer le filesystem et trouver des indices pour trouver la clef.\n "<<
         "Tu vas entrer dans un simulateur de terminal d'une machine.\n" <<
         "Tu vas decouvrir comment marche la securite."<< RESET <<"\n";
-    cout << GREEN << "______________________Entree________________________\n";
+    std::cout << GREEN << "______________________Entree________________________\n";
 
     
      //vector<string> files = { "fichier1.txt", "fichier2.txt", "dossier1", "dossier2" };  // Fichiers contenus dans le disque
     
     Folder Drive = create_drive();
-    string enter_user = "";  // Commandes entrées par l'utilisateur
-    while (enter_user != "Exit" && enter_user != "exit")
+    string user_input = "";  // Commandes entrées par l'utilisateur
+    
+    vector<string> command;
+
+
+
+    while (user_input != "Exit")
     {
-        cout << GREEN<< "C:/Users/"<<name_user<<":~$ "<< RESET;
-        cin >> enter_user;
-        // Exécution de la commande saisie
-        if (enter_user == "ls") {
+        std::cout << GREEN<< "C:/Users/"<<name_user<<":~$ "<< RESET;
+        cin >> user_input;
+
+        //---parser la commande saisie
+        //1. la mettre en minuscule
+        for (int c = 0; c < user_input.size(); c++) {
+            user_input[c] = tolower(user_input[c]);
+        }
+
+        //2. split les arguments
+        command = splitInput(user_input);
+
+        //---Exécution de la commande saisie
+        if (command[0] == "ls") {
             listerFichiers(Drive); // Affiche les fichiers et les répertoires
         }
-        else if (enter_user.substr(0, 2) == "cd") {
-            cout << GREEN << "Commande 'cd' pas encore implémenté."<< RESET <<"\n";
+        else if (command[0] == "cd") {
+            //vérifier si command[1] est dans la liste des folders dispo, si oui y bouger
+            std::cout << GREEN << "Commande 'cd' pas encore implémenté."<< RESET <<"\n";
         }
-        else if (enter_user.substr(0, 5) == "mkdir") {
-            cout << GREEN << "Commande 'mkdir' pas encore implémenté." << RESET << "\n";
+        else if (command[0] == "mkdir") {
+            //pas sûr que ça soit nécessaire ?
+            std::cout << GREEN << "Commande 'mkdir' pas encore implémenté." << RESET << "\n";
+        }
+        else if (command[0] == "unpack") {
+            //check que command[1] est un nom d'archive verrouillée
+            std::cout << GREEN << "Commande 'unpack' pas encore implémenté." << RESET << "\n";
         }
         else
         {
-            cout << GREEN << "Nous ne connaissons pas cette commande." << RESET << "\n";
+            std::cout << GREEN << "Nous ne connaissons pas cette commande." << RESET << "\n";
         }
     }
-    cout << GREEN << "______________________Sortie________________________\n";
-    cout << "Jeu fini ! "<< RESET << "\n";
+    std::cout << GREEN << "______________________Sortie________________________\n";
+    std::cout << "Jeu fini ! "<< RESET << "\n";
     return 0;
     
 }
