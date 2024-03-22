@@ -21,7 +21,8 @@ void File::Renamed(std::string a_name)
 void File::Open()
 {
     if (my_extension == "txt") {
-        std::cout << my_content;
+        std::string command = "notepad.exe ressources\\" + getFullName();
+        system(command.c_str());
     }
     else if (my_extension == "png") {
         std::string command = "mspaint.exe ressources\\" + getFullName();

@@ -11,6 +11,7 @@
 #include <sstream>
 #include "File.h"
 #include "Folder.h"
+#include "Jeu_domaine_seccurite.h"
 
 using namespace std;
 
@@ -43,12 +44,15 @@ Folder* create_drive()
     cout << "create_drive::Creation du disque dur..." << "! \n";
     //créer 10 dossiers ?
     Folder* myFolder = new Folder("Drive", "password123", 2);
-    Folder* subFolder1 = new Folder("Dossier1","sub_password1", 2);   //Créé un sous-dossier
+    Folder* subFolder1 = new Folder("dossier1","sub_password1", 2);   //Créé un sous-dossier
     File* file = new File("puzzle3", "png");
+    File* file2 = new File("puzzle1", "txt");
     myFolder->Add_Subfolder(subFolder1);
     myFolder->Add_File(file);
+    myFolder->Add_File(file2);
 
     std::cout << "create_drive::Disque dur créé" << "! \n";
+    myFolder->parent_folder = nullptr;
     return myFolder;
 }
 
@@ -60,11 +64,18 @@ void splitInput(const string& input, vector<string>* output) {
     }
 }
 
+bool promptPassword(string password) {
+    std::cout << GREEN << "Ce dossier est verrouillé. Veuillez entrer son mot de passe." << RESET << "\n";
+    string user_input = "";
+    std::getline(std::cin >> std::ws, user_input);
+    return user_input == password;
+}
+
 // Programme principal
 int main(){
 
     Folder* Drive = create_drive();
-    Folder* cwd = Drive; //Current Working Directory : Etat courant, pour le parcourt des dossiers, besoin pour la commande cd?
+    Folder* cwd = Drive; //Current Working Directory : Etat courant, pour le parcourt des dossiers, cd etc
 
     string name_user = "";      // Nom de l'utilisateur
 
@@ -94,7 +105,19 @@ int main(){
     while (!exit_flag)
     {
         await_input:
-        std::cout << GREEN<< "C:/Users/"<<name_user<<":~$ "<< RESET;
+        command.clear();
+
+        string arborescence = cwd->my_name;
+
+        Folder* f = cwd;
+        while (f->parent_folder != nullptr) {
+            f = f->parent_folder;
+            arborescence = f->my_name + '/' + arborescence;
+        }
+
+        arborescence = '/' + arborescence;
+
+        std::cout << GREEN<< "C:/Users/"<<name_user<<arborescence<<":~$ "<< RESET;
         std::getline(std::cin >> std::ws, user_input);
 
         //---parser la commande saisie
@@ -108,12 +131,47 @@ int main(){
 
         //---Exécution de la commande saisie
         if (command[0] == "ls") {
-            Ls_Command(Drive); // Affiche les fichiers et les répertoires
+            Ls_Command(cwd); // Affiche les fichiers et les répertoires
         }
         else if (command[0] == "cd") {
-            //vérifier si command[1] est dans la liste des folders dispo, si oui y bouger
 
-            std::cout << GREEN << "Commande 'cd' pas encore implémenté."<< RESET <<"\n";
+            if (command.size() == 1) {
+                std::cout << RED << "Argument manquant : nom du dossier" << RESET << "\n";
+            }
+            else {
+                if (command[1] == "..") {
+                    if (cwd->parent_folder == nullptr) {
+                        std::cout << RED << "Erreur : Pas de dossier parent (racine)" << RESET << "\n";
+                    }
+                    else {
+                        cwd = cwd->parent_folder;
+                    }
+                    goto await_input;
+                }
+                string foldername = command[1];
+                for (Folder* f : cwd->my_subfolders) {
+                    if ((f->my_name) == foldername) {
+                        
+                        if (f->isLocked) {
+                            if (promptPassword(f->my_password)) {
+                                //password ok
+                                std::cout << GREEN << "Mot de passe validé" << RESET << "\n";
+                                f->isLocked = false;
+                                cwd = f;
+                            }
+                            else {
+                                //wrong password
+                                std::cout << RED << "Erreur : Mot de passe incorrect" << RESET << "\n";
+                            }
+                        }
+                        goto await_input;
+                    }
+                }
+                std::cout << RED << "Erreur : dossier introuvable" << RESET << "\n";
+            }
+
+
+
         }
         else if (command[0] == "mkdir") {
             //pas sûr que ça soit nécessaire ?
@@ -131,23 +189,15 @@ int main(){
                 std::cout << RED << "Argument manquant : nom du fichier" << RESET << "\n";
             }
             else {
-                try {
-                    string filename = command[1];
-                    for (File* f : cwd->my_files) {
-                        if ((f->my_name + "." + f->my_extension) == filename) {
-                            //ouvrir le fichier
-                            f->Open();
-
-
-                            goto await_input;
-                        }
+                string filename = command[1];
+                for (File* f : cwd->my_files) {
+                    if ((f->my_name + "." + f->my_extension) == filename) {
+                        //ouvrir le fichier
+                        f->Open();
+                        goto await_input;
                     }
-                    std::cout << RED << "Erreur : fichier introuvable" << RESET << "\n";
-
                 }
-                catch (exception e) {
-                    std::cout << RED << "Argument manquant : nom du fichier" << RESET << "\n";
-                }
+                std::cout << RED << "Erreur : fichier introuvable" << RESET << "\n";
             }
             
         }

@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClInclude Include="File.h" />
     <ClInclude Include="Folder.h" />
+    <ClInclude Include="Jeu_domaine_seccurite.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
