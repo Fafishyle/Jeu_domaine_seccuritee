@@ -51,7 +51,7 @@ Folder* create_drive()
     myFolder->Add_File(file);
     myFolder->Add_File(file2);
 
-    std::cout << "create_drive::Disque dur créé" << "! \n";
+    std::cout << "create_drive::Disque dur cre" << "! \n";
     myFolder->parent_folder = nullptr;
     return myFolder;
 }
@@ -65,7 +65,7 @@ void splitInput(const string& input, vector<string>* output) {
 }
 
 bool promptPassword(string password) {
-    std::cout << GREEN << "Ce dossier est verrouillé. Veuillez entrer son mot de passe." << RESET << "\n";
+    std::cout << GREEN << "Ce dossier est verrouille. Veuillez entrer son mot de passe." << RESET << "\n";
     string user_input = "";
     std::getline(std::cin >> std::ws, user_input);
     return user_input == password;
@@ -155,7 +155,7 @@ int main(){
                         if (f->isLocked) {
                             if (promptPassword(f->my_password)) {
                                 //password ok
-                                std::cout << GREEN << "Mot de passe validé" << RESET << "\n";
+                                std::cout << GREEN << "Mot de passe valide" << RESET << "\n";
                                 f->isLocked = false;
                                 cwd = f;
                             }
