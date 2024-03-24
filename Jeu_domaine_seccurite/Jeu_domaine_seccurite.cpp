@@ -160,12 +160,13 @@ int main(){
                 string foldername = command[1];
                 for (Folder* f : cwd->my_subfolders) {
                     if ((f->my_name) == foldername) {
-                        cwd = f;
+                        cwd = f; //déplacer ? ou non? pour la commande cd ..
                         if (f->isLocked) {
                             if (promptPassword(f->my_password)) {
                                 //password ok
                                 std::cout << GREEN << "Mot de passe valide!" << RESET << "\n";
                                 f->isLocked = false;
+                                //cwd = f;
                             }
                             else {
                                 //wrong password

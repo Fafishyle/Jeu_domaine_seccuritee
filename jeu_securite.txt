@@ -60,7 +60,7 @@
 - 9. Un truc de réseau/sécurité "classique"
 
 	Je sais pas trop quoi mettre, mais ça serait bien d'avoir un autre puzzle qui se repose sur de la
-	sécurité un peu plus concrète
+	sécurité un peu plus concrète.
 
 - 10. Le final
 
