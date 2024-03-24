@@ -62,13 +62,14 @@ Folder* create_drive()
     myFolder->Add_File(file1);
     myFolder->Add_Subfolder(subFolder1);
     subFolder1->parent_folder = myFolder;
-    //Crée des sous-dossier linéaire
-    Folder* subFolder2 = Create_Classic_Level(subFolder1, 2, "txt", "azerty");
-    Folder* subFolder3 = Create_Classic_Level(subFolder2, 3, "png", "azerty");
-    Folder* subFolder4 = Create_Classic_Level(subFolder3, 4, "txt", "azerty");
-    Folder* subFolder5 = Create_Classic_Level(subFolder4, 5, "txt", "azerty");
-    Folder* subFolder6 = Create_Classic_Level(subFolder5, 6, "txt", "azerty");
-    Folder* subFolder7 = Create_Classic_Level(subFolder6, 7, "txt", "azerty");
+ 
+    Folder* subFolder2 = Create_Classic_Level(subFolder1, 2, "txt", "krakatoa18");
+    Folder* subFolder3 = Create_Classic_Level(subFolder2, 3, "png", "jakadi");
+    Folder* subFolder4 = Create_Classic_Level(subFolder3, 4, "txt", "spaghetti");
+    Folder* subFolder5 = Create_Classic_Level(subFolder4, 5, "jpg", "none"); //j'ai pas encore mis le mot de passe dans le code
+    Folder* subFolder6 = Create_Classic_Level(subFolder5, 6, "png", "none");
+    Folder* subFolder7 = Create_Classic_Level(subFolder6, 7, "txt", "none");
+    Folder* subFolderFinal = Create_Classic_Level(subFolder7, 10, "txt", "none");
     std::cout << "create_drive::Disque dur cre" << "! \n";
     
     return myFolder;
@@ -146,10 +147,12 @@ int main(){
             }
             else {
                 if (command[1] == "..") {
+                    cout << "commande parent";
                     if (cwd->parent_folder == nullptr) {
                         std::cout << RED << "Erreur : Pas de dossier parent (racine)" << RESET << "\n";
                     }
                     else {
+                        cwd->isLocked = false;
                         cwd = cwd->parent_folder;
                     }
                     goto await_input;
@@ -157,13 +160,12 @@ int main(){
                 string foldername = command[1];
                 for (Folder* f : cwd->my_subfolders) {
                     if ((f->my_name) == foldername) {
-                        
+                        cwd = f;
                         if (f->isLocked) {
                             if (promptPassword(f->my_password)) {
                                 //password ok
                                 std::cout << GREEN << "Mot de passe valide!" << RESET << "\n";
                                 f->isLocked = false;
-                                cwd = f;
                             }
                             else {
                                 //wrong password

@@ -27,41 +27,42 @@
 	sont insérés au beau milieu qui le rendent illisible. En les supprimant, on retrouve le mot
 	de passe.
 
-- 5. Le mot de passe le plus facile
+
+-/------------------- 5. Le mot de passe le plus facile (ON L ABANDONNE)
 
 	Le 5e mdp est le 1er mot de passe utilisé par l'outil linux qui bruteforce, que le prof nous
 	avait montré. (à tester que le 1er est bien tjrs le meme)
-
-- 6. Caché dans l'hexa X
+-/---------------------
+- 5. Caché dans l'hexa X
 
 	Comme le prof avait fait, on planque un "pass = truc" dans un fichier lambda (image ou autre,
 	juste pas texte) 
 
-- 7. Cypher AMSCO
+- 6. Cypher AMSCO 
 
 	C'est un type de cypher textuel, une façon de réordonner les lettres des mots. Pour l'utiliser,
 	il faut le texte à déchiffrer et une suite de chiffres qui indiquent comment les colonnes sont
 	réordonnées. Ce dernier chiffre peut être bruteforce, mais on peut en plus le cacher qqpart de
 	cheeky, genre la date de création ou la taille du fichier même.
 
-- 8. Mot de passe musical
+- 7. Mot de passe musical
 
 	Le fichier n'est pas un fichier texte mais un fichier midi, un type de fichier audio qui décrit une suite
 	de notes. Le mot de passe, c'est la suite des notes (c,d,e,f,g,a,b) jouées dans ce fichier. Bien sur,
 	ça ne se reconnait pas à l'oreille, il faut ouvrir le fichier dans l'éditeur de texte.
 
-- 9. Image illisible
+- 8. Image illisible
 
 	Le fichier sera nommé png ou jpg ou whatever, mais ne pourra pas être ouvert. Il faut aller dans l'hexa,
 	les premières lettres indiquent quel type de fichier c'est "sensé" être. Une fois renommé correctement,
 	le fichier indiquera simplement le mdp.
 
-- 10. Un truc de réseau/sécurité "classique"
+- 9. Un truc de réseau/sécurité "classique"
 
 	Je sais pas trop quoi mettre, mais ça serait bien d'avoir un autre puzzle qui se repose sur de la
 	sécurité un peu plus concrète
 
-- 11. Le final
+- 10. Le final
 
 	Une fois tout ouvert, si on trie les fichiers contenant tous les mots de passe so far,
 	et qu'on lit la première lettre, ça va indiquer un truc style "PASS=ABCDE" et c'est le mot
