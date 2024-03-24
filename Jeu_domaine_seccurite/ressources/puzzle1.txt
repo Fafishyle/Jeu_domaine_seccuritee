@@ -1,10 +1,17 @@
 Bienvenue dans ce disque dur! Il n'y a pas de temps à perdre, nous allons vous expliquer comment les choses marchent ici.
 
-Utilisez la commande ls pour lister des fichiers.
+Utilisez la commande ls + nom_de_dossier pour lister le contenu d'un dossier.
 
-Utilisez la commande cd pour naviguer entre les dossiers.
+Utilisez la commande cd + nom_de_dossier pour naviguer entre les dossiers.
+
+Utilisez la commande open + nom_de_fichier pour ouvrir un fichier.
 
 Utilisez la commande unpack pour ouvrir une archive zip...
+
 Mais elles seront verrouillées ! Trouvez le mot de passe pour avancer plus loin dans l'arborescence de fichiers.
 
-On va être gentils, on va vous donner le premier mot de passe : azerty. Bonne chance pour la suite !
+On va être gentils, on va vous donner le premier mot de passe : azerty. 
+
+Tu peux également faire copier/coller avec le clic droite.
+
+Bonne chance pour la suite !

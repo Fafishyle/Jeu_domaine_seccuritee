@@ -37,22 +37,40 @@ void Ls_Command(const Folder* a_folder) {
     }
 }
 
+//permet de créer un dossier composé de exactement 1 sous-dossier + 1 puzzle
+Folder* Create_Classic_Level(Folder* parent_folder, int level, std::string extension, std::string word_pass)
+{
+        std::string folder_name = "dossier" + std::to_string(level);
+        Folder* subfolder = new Folder(folder_name, word_pass, 1);
+        std::string file_name = "puzzle" + std::to_string(level);
+        File* file = new File(file_name, extension);
+        parent_folder->Add_File(file);
+        parent_folder->Add_Subfolder(subfolder);
+        subfolder->parent_folder = parent_folder;
+        return subfolder;
+}
 
 //Création du disque dur
 Folder* create_drive()
 {
     cout << "create_drive::Creation du disque dur..." << "! \n";
-    //créer 10 dossiers ?
-    Folder* myFolder = new Folder("Drive", "password123", 2);
-    Folder* subFolder1 = new Folder("dossier1","sub_password1", 2);   //Créé un sous-dossier
-    File* file = new File("puzzle3", "png");
-    File* file2 = new File("puzzle1", "txt");
-    myFolder->Add_Subfolder(subFolder1);
-    myFolder->Add_File(file);
-    myFolder->Add_File(file2);
-
-    std::cout << "create_drive::Disque dur cre" << "! \n";
+    //---------------------Niveau 1----------------------
+    Folder* myFolder = new Folder("drive", "none", 1);
     myFolder->parent_folder = nullptr;
+    Folder* subFolder1 = new Folder("dossier1","azerty", 1);   //Créé un sous-dossier
+    File* file1 = new File("puzzle1", "txt");
+    myFolder->Add_File(file1);
+    myFolder->Add_Subfolder(subFolder1);
+    subFolder1->parent_folder = myFolder;
+    //Crée des sous-dossier linéaire
+    Folder* subFolder2 = Create_Classic_Level(subFolder1, 2, "txt", "azerty");
+    Folder* subFolder3 = Create_Classic_Level(subFolder2, 3, "png", "azerty");
+    Folder* subFolder4 = Create_Classic_Level(subFolder3, 4, "txt", "azerty");
+    Folder* subFolder5 = Create_Classic_Level(subFolder4, 5, "txt", "azerty");
+    Folder* subFolder6 = Create_Classic_Level(subFolder5, 6, "txt", "azerty");
+    Folder* subFolder7 = Create_Classic_Level(subFolder6, 7, "txt", "azerty");
+    std::cout << "create_drive::Disque dur cre" << "! \n";
+    
     return myFolder;
 }
 
@@ -91,32 +109,20 @@ int main(){
         "Tu vas entrer dans un simulateur de terminal d'une machine.\n" <<
         "Tu vas decouvrir comment marche la securite."<< RESET <<"\n";
     std::cout << GREEN << "______________________Entree________________________\n";
-
-    
-     //vector<string> files = { "fichier1.txt", "fichier2.txt", "dossier1", "dossier2" };  // Fichiers contenus dans le disque
     string user_input = "";  // Commandes entrées par l'utilisateur
-    
     vector<string> command;
-
-    bool exit_flag = false;
-
-
-
+    bool exit_flag = false; //sortie du terminal
     while (!exit_flag)
     {
         await_input:
         command.clear();
-
         string arborescence = cwd->my_name;
-
         Folder* f = cwd;
         while (f->parent_folder != nullptr) {
             f = f->parent_folder;
             arborescence = f->my_name + '/' + arborescence;
         }
-
         arborescence = '/' + arborescence;
-
         std::cout << GREEN<< "C:/Users/"<<name_user<<arborescence<<":~$ "<< RESET;
         std::getline(std::cin >> std::ws, user_input);
 
@@ -155,7 +161,7 @@ int main(){
                         if (f->isLocked) {
                             if (promptPassword(f->my_password)) {
                                 //password ok
-                                std::cout << GREEN << "Mot de passe valide" << RESET << "\n";
+                                std::cout << GREEN << "Mot de passe valide!" << RESET << "\n";
                                 f->isLocked = false;
                                 cwd = f;
                             }
@@ -172,10 +178,6 @@ int main(){
 
 
 
-        }
-        else if (command[0] == "mkdir") {
-            //pas sûr que ça soit nécessaire ?
-            std::cout << GREEN << "Commande 'mkdir' pas encore implémenté." << RESET << "\n";
         }
         else if (command[0] == "unpack") {
             //check que command[1] est un nom d'archive verrouillée

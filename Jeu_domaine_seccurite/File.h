@@ -12,9 +12,9 @@ public:
    
 public:
     File();
+    File(std::string a_name, std::string extension);
     void Open();
     std::string getFullName();
-    File(std::string a_name, std::string extension);
     void Renamed(std::string a_name);
 };
 
