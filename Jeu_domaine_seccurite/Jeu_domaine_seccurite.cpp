@@ -53,7 +53,6 @@ Folder* Create_Classic_Level(Folder* parent_folder, int level, std::string exten
 //Création du disque dur
 Folder* create_drive()
 {
-<<<<<<< HEAD
     Folder* myFolder = new Folder("Drive", "", 0);
     myFolder->parent_folder = nullptr;
 
@@ -95,27 +94,6 @@ Folder* create_drive()
     File* key = new File("key", "txt");
     puzzle7->Add_File(key);
 
-=======
-    cout << "create_drive::Creation du disque dur..." << "! \n";
-    //---------------------Niveau 1----------------------
-    Folder* myFolder = new Folder("drive", "none", 1);
-    myFolder->parent_folder = nullptr;
-    Folder* subFolder1 = new Folder("dossier1","azerty", 1);   //Créé un sous-dossier
-    File* file1 = new File("puzzle1", "txt");
-    myFolder->Add_File(file1);
-    myFolder->Add_Subfolder(subFolder1);
-    subFolder1->parent_folder = myFolder;
- 
-    Folder* subFolder2 = Create_Classic_Level(subFolder1, 2, "txt", "krakatoa18");
-    Folder* subFolder3 = Create_Classic_Level(subFolder2, 3, "png", "jakadi");
-    Folder* subFolder4 = Create_Classic_Level(subFolder3, 4, "txt", "spaghetti");
-    Folder* subFolder5 = Create_Classic_Level(subFolder4, 5, "jpg", "none"); //j'ai pas encore mis le mot de passe dans le code
-    Folder* subFolder6 = Create_Classic_Level(subFolder5, 6, "png", "none");
-    Folder* subFolder7 = Create_Classic_Level(subFolder6, 7, "txt", "none");
-    Folder* subFolderFinal = Create_Classic_Level(subFolder7, 10, "txt", "none");
-    std::cout << "create_drive::Disque dur cre" << "! \n";
-    
->>>>>>> 55a248cad310d6fb3b39fef2ea8a8b73ebba7698
     return myFolder;
 }
 
@@ -156,15 +134,11 @@ int main(){
     std::cout << GREEN << "______________________Entree________________________\n";
     string user_input = "";  // Commandes entrées par l'utilisateur
     vector<string> command;
-<<<<<<< HEAD
 
     bool exit_flag = false;
 
     std::cout << GREEN << "Utilisez la commande OPEN bienvenue.txt pour ouvrir votre premier indice.\n" << RESET;
 
-=======
-    bool exit_flag = false; //sortie du terminal
->>>>>>> 55a248cad310d6fb3b39fef2ea8a8b73ebba7698
     while (!exit_flag)
     {
         await_input:
