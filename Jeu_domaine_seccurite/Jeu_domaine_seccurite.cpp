@@ -38,6 +38,7 @@ void Ls_Command(const Folder* a_folder) {
 }
 
 //permet de créer un dossier composé de exactement 1 sous-dossier + 1 puzzle
+//pas utilisé ici
 Folder* Create_Classic_Level(Folder* parent_folder, int level, std::string extension, std::string word_pass)
 {
         std::string folder_name = "dossier" + std::to_string(level);
@@ -52,8 +53,9 @@ Folder* Create_Classic_Level(Folder* parent_folder, int level, std::string exten
 
 //Création du disque dur
 Folder* create_drive()
-{
-<<<<<<< HEAD
+{  
+    cout << "create_drive::Creation du disque dur..." << "! \n";
+    //<<<<<<< HEAD
     Folder* myFolder = new Folder("Drive", "", 0);
     myFolder->parent_folder = nullptr;
 
@@ -91,13 +93,13 @@ Folder* create_drive()
     File* indice7 = new File("worst_password", "txt");
     puzzle6->Add_Subfolder(puzzle7);
     puzzle6->Add_File(indice7);
+    
 
     File* key = new File("key", "txt");
     puzzle7->Add_File(key);
 
-=======
-    cout << "create_drive::Creation du disque dur..." << "! \n";
-    //---------------------Niveau 1----------------------
+//=======
+    /*
     Folder* myFolder = new Folder("drive", "none", 1);
     myFolder->parent_folder = nullptr;
     Folder* subFolder1 = new Folder("dossier1","azerty", 1);   //Créé un sous-dossier
@@ -114,8 +116,9 @@ Folder* create_drive()
     Folder* subFolder7 = Create_Classic_Level(subFolder6, 7, "txt", "none");
     Folder* subFolderFinal = Create_Classic_Level(subFolder7, 10, "txt", "none");
     std::cout << "create_drive::Disque dur cre" << "! \n";
+    */
     
->>>>>>> 55a248cad310d6fb3b39fef2ea8a8b73ebba7698
+//>>>>>>> 55a248cad310d6fb3b39fef2ea8a8b73ebba7698
     return myFolder;
 }
 
@@ -156,15 +159,13 @@ int main(){
     std::cout << GREEN << "______________________Entree________________________\n";
     string user_input = "";  // Commandes entrées par l'utilisateur
     vector<string> command;
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
-    bool exit_flag = false;
+    std::cout << GREEN << "Utilisez la commande"<<RESET<<" open bienvenue.txt "<< GREEN <<"pour ouvrir votre premier indice.\n" << RESET;
 
-    std::cout << GREEN << "Utilisez la commande OPEN bienvenue.txt pour ouvrir votre premier indice.\n" << RESET;
-
-=======
+//=======
     bool exit_flag = false; //sortie du terminal
->>>>>>> 55a248cad310d6fb3b39fef2ea8a8b73ebba7698
+//>>>>>>> 55a248cad310d6fb3b39fef2ea8a8b73ebba7698
     while (!exit_flag)
     {
         await_input:
@@ -254,6 +255,12 @@ int main(){
                     if ((f->my_name + "." + f->my_extension) == filename) {
                         //ouvrir le fichier
                         f->Open();
+                        //Si Fin de partie, ouvrir image "Bravo"
+                        if (filename == "key.txt")
+                        {
+                            File* bravo_sms = new File("bravo", "png");
+                            bravo_sms->Open();
+                        }
                         goto await_input;
                     }
                 }
