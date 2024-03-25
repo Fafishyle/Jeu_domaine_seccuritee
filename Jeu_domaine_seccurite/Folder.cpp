@@ -10,7 +10,6 @@ Folder::Folder(std::string a_name, std::string a_password, int a_file_count) :
         my_files.push_back(a_file);
     }
     isLocked = true;
-    std::cout << "Folder::Un Dossier a ete cree!" << std::endl;
 }
 
 void Folder::Add_File(File* a_file)

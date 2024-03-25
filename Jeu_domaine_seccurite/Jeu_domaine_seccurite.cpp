@@ -41,18 +41,47 @@ void Ls_Command(const Folder* a_folder) {
 //Création du disque dur
 Folder* create_drive()
 {
-    cout << "create_drive::Creation du disque dur..." << "! \n";
-    //créer 10 dossiers ?
-    Folder* myFolder = new Folder("Drive", "password123", 2);
-    Folder* subFolder1 = new Folder("dossier1","sub_password1", 2);   //Créé un sous-dossier
-    File* file = new File("puzzle3", "png");
-    File* file2 = new File("puzzle1", "txt");
-    myFolder->Add_Subfolder(subFolder1);
-    myFolder->Add_File(file);
-    myFolder->Add_File(file2);
-
-    std::cout << "create_drive::Disque dur créé" << "! \n";
+    Folder* myFolder = new Folder("Drive", "", 0);
     myFolder->parent_folder = nullptr;
+
+    Folder* puzzle1 = new Folder("etape1","azerty", 0);   //Créé un sous-dossier
+    File* indice1 = new File("bienvenue", "txt");
+    myFolder->Add_Subfolder(puzzle1);
+    myFolder->Add_File(indice1);
+
+    Folder* puzzle2 = new Folder("etape2", "krakatoa18", 0);
+    File* indice2 = new File("puzzle2", "txt");
+    puzzle1->Add_Subfolder(puzzle2);
+    puzzle1->Add_File(indice2);
+
+    Folder* puzzle3 = new Folder("etape3", "jakadi", 0);
+    File* indice3 = new File("puzzle3", "png");
+    puzzle2->Add_Subfolder(puzzle3);
+    puzzle2->Add_File(indice3);
+
+    Folder* puzzle4 = new Folder("etape4", "spaghetti", 0);
+    File* indice4 = new File("puzzle4", "txt");
+    puzzle3->Add_Subfolder(puzzle4);
+    puzzle3->Add_File(indice4);
+
+    Folder* puzzle5 = new Folder("etape5", "pandore", 0);
+    File* indice5 = new File("51324", "txt");
+    puzzle4->Add_Subfolder(puzzle5);
+    puzzle4->Add_File(indice5);
+
+    Folder* puzzle6 = new Folder("etape6", "cabbage", 0);
+    File* indice6 = new File("melody", "mid");
+    puzzle5->Add_Subfolder(puzzle6);
+    puzzle5->Add_File(indice6);
+
+    Folder* puzzle7 = new Folder("wallet_key", "123456", 0);
+    File* indice7 = new File("worst_password", "txt");
+    puzzle6->Add_Subfolder(puzzle7);
+    puzzle6->Add_File(indice7);
+
+    File* key = new File("key", "txt");
+    puzzle7->Add_File(key);
+
     return myFolder;
 }
 
@@ -100,7 +129,7 @@ int main(){
 
     bool exit_flag = false;
 
-
+    std::cout << GREEN << "Utilisez la commande OPEN bienvenue.txt pour ouvrir votre premier indice.\n" << RESET;
 
     while (!exit_flag)
     {
@@ -164,6 +193,9 @@ int main(){
                                 std::cout << RED << "Erreur : Mot de passe incorrect" << RESET << "\n";
                             }
                         }
+                        else {
+                            cwd = f;
+                        }
                         goto await_input;
                     }
                 }
@@ -210,3 +242,4 @@ int main(){
     std::cout << "Jeu fini ! "<< RESET << "\n";
     return 0; 
 }
+
