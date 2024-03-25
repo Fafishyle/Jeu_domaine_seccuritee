@@ -37,10 +37,23 @@ void Ls_Command(const Folder* a_folder) {
     }
 }
 
+//permet de créer un dossier composé de exactement 1 sous-dossier + 1 puzzle
+Folder* Create_Classic_Level(Folder* parent_folder, int level, std::string extension, std::string word_pass)
+{
+        std::string folder_name = "dossier" + std::to_string(level);
+        Folder* subfolder = new Folder(folder_name, word_pass, 1);
+        std::string file_name = "puzzle" + std::to_string(level);
+        File* file = new File(file_name, extension);
+        parent_folder->Add_File(file);
+        parent_folder->Add_Subfolder(subfolder);
+        subfolder->parent_folder = parent_folder;
+        return subfolder;
+}
 
 //Création du disque dur
 Folder* create_drive()
 {
+<<<<<<< HEAD
     Folder* myFolder = new Folder("Drive", "", 0);
     myFolder->parent_folder = nullptr;
 
@@ -82,6 +95,27 @@ Folder* create_drive()
     File* key = new File("key", "txt");
     puzzle7->Add_File(key);
 
+=======
+    cout << "create_drive::Creation du disque dur..." << "! \n";
+    //---------------------Niveau 1----------------------
+    Folder* myFolder = new Folder("drive", "none", 1);
+    myFolder->parent_folder = nullptr;
+    Folder* subFolder1 = new Folder("dossier1","azerty", 1);   //Créé un sous-dossier
+    File* file1 = new File("puzzle1", "txt");
+    myFolder->Add_File(file1);
+    myFolder->Add_Subfolder(subFolder1);
+    subFolder1->parent_folder = myFolder;
+ 
+    Folder* subFolder2 = Create_Classic_Level(subFolder1, 2, "txt", "krakatoa18");
+    Folder* subFolder3 = Create_Classic_Level(subFolder2, 3, "png", "jakadi");
+    Folder* subFolder4 = Create_Classic_Level(subFolder3, 4, "txt", "spaghetti");
+    Folder* subFolder5 = Create_Classic_Level(subFolder4, 5, "jpg", "none"); //j'ai pas encore mis le mot de passe dans le code
+    Folder* subFolder6 = Create_Classic_Level(subFolder5, 6, "png", "none");
+    Folder* subFolder7 = Create_Classic_Level(subFolder6, 7, "txt", "none");
+    Folder* subFolderFinal = Create_Classic_Level(subFolder7, 10, "txt", "none");
+    std::cout << "create_drive::Disque dur cre" << "! \n";
+    
+>>>>>>> 55a248cad310d6fb3b39fef2ea8a8b73ebba7698
     return myFolder;
 }
 
@@ -94,7 +128,7 @@ void splitInput(const string& input, vector<string>* output) {
 }
 
 bool promptPassword(string password) {
-    std::cout << GREEN << "Ce dossier est verrouillé. Veuillez entrer son mot de passe." << RESET << "\n";
+    std::cout << GREEN << "Ce dossier est verrouille. Veuillez entrer son mot de passe." << RESET << "\n";
     string user_input = "";
     std::getline(std::cin >> std::ws, user_input);
     return user_input == password;
@@ -120,32 +154,28 @@ int main(){
         "Tu vas entrer dans un simulateur de terminal d'une machine.\n" <<
         "Tu vas decouvrir comment marche la securite."<< RESET <<"\n";
     std::cout << GREEN << "______________________Entree________________________\n";
-
-    
-     //vector<string> files = { "fichier1.txt", "fichier2.txt", "dossier1", "dossier2" };  // Fichiers contenus dans le disque
     string user_input = "";  // Commandes entrées par l'utilisateur
-    
     vector<string> command;
+<<<<<<< HEAD
 
     bool exit_flag = false;
 
     std::cout << GREEN << "Utilisez la commande OPEN bienvenue.txt pour ouvrir votre premier indice.\n" << RESET;
 
+=======
+    bool exit_flag = false; //sortie du terminal
+>>>>>>> 55a248cad310d6fb3b39fef2ea8a8b73ebba7698
     while (!exit_flag)
     {
         await_input:
         command.clear();
-
         string arborescence = cwd->my_name;
-
         Folder* f = cwd;
         while (f->parent_folder != nullptr) {
             f = f->parent_folder;
             arborescence = f->my_name + '/' + arborescence;
         }
-
         arborescence = '/' + arborescence;
-
         std::cout << GREEN<< "C:/Users/"<<name_user<<arborescence<<":~$ "<< RESET;
         std::getline(std::cin >> std::ws, user_input);
 
@@ -169,10 +199,12 @@ int main(){
             }
             else {
                 if (command[1] == "..") {
+                    cout << "commande parent";
                     if (cwd->parent_folder == nullptr) {
                         std::cout << RED << "Erreur : Pas de dossier parent (racine)" << RESET << "\n";
                     }
                     else {
+                        cwd->isLocked = false;
                         cwd = cwd->parent_folder;
                     }
                     goto await_input;
@@ -180,13 +212,13 @@ int main(){
                 string foldername = command[1];
                 for (Folder* f : cwd->my_subfolders) {
                     if ((f->my_name) == foldername) {
-                        
+                        cwd = f; //déplacer ? ou non? pour la commande cd ..
                         if (f->isLocked) {
                             if (promptPassword(f->my_password)) {
                                 //password ok
-                                std::cout << GREEN << "Mot de passe validé" << RESET << "\n";
+                                std::cout << GREEN << "Mot de passe valide!" << RESET << "\n";
                                 f->isLocked = false;
-                                cwd = f;
+                                //cwd = f;
                             }
                             else {
                                 //wrong password
@@ -204,10 +236,6 @@ int main(){
 
 
 
-        }
-        else if (command[0] == "mkdir") {
-            //pas sûr que ça soit nécessaire ?
-            std::cout << GREEN << "Commande 'mkdir' pas encore implémenté." << RESET << "\n";
         }
         else if (command[0] == "unpack") {
             //check que command[1] est un nom d'archive verrouillée

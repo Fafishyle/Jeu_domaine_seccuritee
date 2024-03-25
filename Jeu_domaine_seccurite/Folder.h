@@ -13,7 +13,7 @@ public:
     std::vector <Folder*> my_subfolders; //Pointeur vers des dossiers, pour éviter les problèmes de mémoires
     std::string my_password;
     bool isLocked;
-    Folder* parent_folder;
+    Folder* parent_folder;  //pointeur vers le dossier père
 public:
     Folder(std::string a_name,std::string a_password, int a_file_count);
     void Add_Subfolder(Folder* a_subfolder);

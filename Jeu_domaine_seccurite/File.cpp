@@ -34,6 +34,10 @@ void File::Open()
         std::string command = "mspaint.exe ressources\\" + getFullName();
         system(command.c_str());
     }
+    else if (my_extension == "jpg") {
+        std::string command = "mspaint.exe ressources\\" + getFullName();
+        system(command.c_str());
+    }
     else if (my_extension == "mid") {
         Beep(C, 300);
         Beep(A, 300);
