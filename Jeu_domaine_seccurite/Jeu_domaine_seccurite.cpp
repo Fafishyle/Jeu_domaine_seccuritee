@@ -228,6 +228,7 @@ int main(){
             else {
                 string filename = command[1];
                 for (File* f : cwd->my_files) {
+                    //std::cout << f->my_name <<"et"<< filename;
                     if ((f->my_name + "." + f->my_extension) == filename) {
                         //ouvrir le fichier
                         f->Open();
